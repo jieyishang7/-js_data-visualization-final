@@ -2,7 +2,7 @@
 
 ## Final Project Data Report
 
-IMDb user reviews are planned for a later stage to explore viewers’ personal experiences and reflections on growing up.
+IMDb and TMDB user reviews are planned for a later stage to explore viewers’ personal experiences and reflections on growing up.
 
 ### Project question and scope
 
