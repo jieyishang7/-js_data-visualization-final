@@ -1,0 +1,8 @@
+{
+  "source": "https://disneyanimation.com/films/",
+  "access_date": "2026-10-30",
+  "downloaded_html_bytes": 166454,
+  "downloaded_html_sha256": "e411ac7b5153c92c7a1529421193a0d5d477b01f2c7bcde431e6cbd04707c617",
+  "extraction": "figure elements with class film; h4 title, p year, /films/ link; upcoming promotional banner excluded",
+  "raw_html_redistributed": false
+}
