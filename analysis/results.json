@@ -18,11 +18,23 @@
       "bytes": 6453,
       "sha256": "c9a9bd4ce539b8b30d9fdfecba4b11e86590cb4628e8997f7554c18136db4308"
     },
+    "pixar_franchises": {
+      "rows": 17,
+      "columns": 2,
+      "bytes": 408,
+      "sha256": "cdaf99e681fe1e9d7d559f47e60357750f4d6bd1460670b06bfbc13e4e627f22"
+    },
     "public_response": {
       "rows": 31,
       "columns": 17,
       "bytes": 2743,
       "sha256": "c0ac18ad9e54a825b9aef2b1f899003df0443a8b67dc3d2fab2e518408e132d8"
+    },
+    "themes_vox": {
+      "rows": 124,
+      "columns": 2,
+      "bytes": 5660,
+      "sha256": "f0a646d132a028c61abfd40e70b10afb1e2c27af369ccf445edba85e62976a70"
     }
   },
   "missing": {
@@ -46,6 +58,10 @@
       "film_rating": 0,
       "plot": 0
     },
+    "pixar_franchises": {
+      "film": 0,
+      "franchise": 0
+    },
     "public_response": {
       "film": 0,
       "rotten_tomatoes_score": 0,
@@ -64,6 +80,10 @@
       "letterboxd_rating": 0,
       "letterboxd_counts": 0,
       "letterboxd_num_fans": 0
+    },
+    "themes_vox": {
+      "film": 0,
+      "theme": 0
     }
   },
   "duplicates": {
@@ -79,9 +99,17 @@
       "exact_rows": 0,
       "duplicate_film_keys": 0
     },
+    "pixar_franchises": {
+      "exact_rows": 0,
+      "duplicate_film_keys": 0
+    },
     "public_response": {
       "exact_rows": 0,
       "duplicate_film_keys": 0
+    },
+    "themes_vox": {
+      "exact_rows": 0,
+      "duplicate_film_keys": "not applicable: multi-label table"
     }
   },
   "joins": {
@@ -97,9 +125,51 @@
       "orphan_titles": [],
       "films_without_rows": []
     },
+    "pixar_franchises": {
+      "orphan_titles": [],
+      "films_without_rows": [
+        "A Bug's Life",
+        "Brave",
+        "Coco",
+        "Elemental",
+        "Elio",
+        "Hoppers",
+        "Luca",
+        "Onward",
+        "Ratatouille",
+        "Soul",
+        "The Good Dinosaur",
+        "Turning Red",
+        "Up",
+        "WALL-E"
+      ]
+    },
     "public_response": {
       "orphan_titles": [],
       "films_without_rows": []
+    },
+    "themes_vox": {
+      "orphan_titles": [
+        "Bug's Life",
+        "Monsters, Inc"
+      ],
+      "films_without_rows": [
+        "A Bug's Life",
+        "Cars 3",
+        "Coco",
+        "Elemental",
+        "Elio",
+        "Hoppers",
+        "Incredibles 2",
+        "Inside Out 2",
+        "Lightyear",
+        "Luca",
+        "Onward",
+        "Soul",
+        "Toy Story 4",
+        "Toy Story 5",
+        "Turning Red"
+      ]
     }
   },
   "numeric": {
@@ -369,5 +439,162 @@
   "numeric_parse_errors": [],
   "invalid_ranges": [],
   "whitespace_cells": 0,
-  "release_order_valid": true
+  "release_order_valid": true,
+  "supplement": {
+    "title_aliases": {
+      "Bug's Life": "A Bug's Life",
+      "Monsters, Inc": "Monsters, Inc."
+    },
+    "raw_theme_rows": 124,
+    "raw_unique_titles": 18,
+    "normalized_unique_films": 17,
+    "normalized_unique_pairs": 124,
+    "duplicate_pairs_after_normalization": 0,
+    "theme_counts": {
+      "A mismatched pair of partners": 14,
+      "Someone finds their calling": 14,
+      "An ad hoc community is formed by movie's end": 14,
+      "And a wacky ensemble of supporting players": 13,
+      "Go on a wacky journey": 13,
+      "We explore the hidden world of everyday objects": 12,
+      "A child comes of age": 11,
+      "A loved one is lost": 9,
+      "With serious philosophical differences": 8,
+      "There's a super sad piece of music": 7,
+      "Their parent figure realizes nothing lasts forever": 7,
+      "Cars can talk": 2
+    },
+    "theme_counts_per_film": {
+      "A Bug's Life": 5,
+      "Brave": 5,
+      "Cars": 6,
+      "Cars 2": 5,
+      "Finding Dory": 10,
+      "Finding Nemo": 10,
+      "Inside Out": 11,
+      "Monsters University": 6,
+      "Monsters, Inc.": 8,
+      "Ratatouille": 5,
+      "The Good Dinosaur": 6,
+      "The Incredibles": 6,
+      "Toy Story": 8,
+      "Toy Story 2": 11,
+      "Toy Story 3": 9,
+      "Up": 7,
+      "WALL-E": 6
+    },
+    "annotations_per_film_stats": {
+      "n": 17,
+      "min": 5,
+      "max": 11,
+      "mean": 7.294117647058823,
+      "median": 6,
+      "range": 6,
+      "sd": 2.172691472642657,
+      "q1": 6.0,
+      "q3": 9.0,
+      "skew": 0.5522772192073571,
+      "lower": 1.5,
+      "upper": 13.5
+    },
+    "theme_unmatched_titles": [],
+    "films_without_theme_records": [
+      "Cars 3",
+      "Coco",
+      "Elemental",
+      "Elio",
+      "Hoppers",
+      "Incredibles 2",
+      "Inside Out 2",
+      "Lightyear",
+      "Luca",
+      "Onward",
+      "Soul",
+      "Toy Story 4",
+      "Toy Story 5",
+      "Turning Red"
+    ],
+    "franchise_counts": {
+      "Toy Story": 6,
+      "Monsters, Inc.": 2,
+      "Finding Nemo": 2,
+      "The Incredibles": 2,
+      "Cars": 3,
+      "Inside Out": 2
+    },
+    "franchise_spans_days": [
+      [
+        "Cars",
+        3,
+        "2006-06-09",
+        "2017-06-16",
+        4025
+      ],
+      [
+        "Finding Nemo",
+        2,
+        "2003-05-30",
+        "2016-06-17",
+        4767
+      ],
+      [
+        "Inside Out",
+        2,
+        "2015-06-19",
+        "2024-06-14",
+        3283
+      ],
+      [
+        "Monsters, Inc.",
+        2,
+        "2001-11-02",
+        "2013-06-21",
+        4249
+      ],
+      [
+        "The Incredibles",
+        2,
+        "2004-11-05",
+        "2018-06-15",
+        4970
+      ],
+      [
+        "Toy Story",
+        6,
+        "1995-11-22",
+        "2026-06-19",
+        11167
+      ]
+    ],
+    "franchise_adjacent_gaps_days_stats": {
+      "n": 11,
+      "min": 1092,
+      "max": 4970,
+      "mean": 2951,
+      "median": 3283,
+      "range": 3878,
+      "sd": 1407.5932651160279,
+      "q1": 1652.0,
+      "q3": 4054.0,
+      "skew": 0.0901618572111602,
+      "lower": -1951.0,
+      "upper": 7657.0
+    },
+    "films_without_franchise_records": [
+      "A Bug's Life",
+      "Brave",
+      "Coco",
+      "Elemental",
+      "Elio",
+      "Hoppers",
+      "Luca",
+      "Onward",
+      "Ratatouille",
+      "Soul",
+      "The Good Dinosaur",
+      "Turning Red",
+      "Up",
+      "WALL-E"
+    ]
+  }
 }

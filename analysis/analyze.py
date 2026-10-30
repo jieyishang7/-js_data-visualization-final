@@ -25,7 +25,7 @@ for name,rows in TABLES.items():
     results['dimensions'][name]={'rows':len(rows),'columns':len(rows[0]),'bytes':(RAW/(name+'.csv')).stat().st_size,'sha256':hashlib.sha256((RAW/(name+'.csv')).read_bytes()).hexdigest()}
     results['missing'][name]={k:sum(missing(r[k]) for r in rows) for k in rows[0]}
     keys=[tuple(r.values()) for r in rows]
-    results['duplicates'][name]={'exact_rows':len(keys)-len(set(keys)),'duplicate_film_keys':len(rows)-len({r['film'] for r in rows}) if name!='genres' else 'not applicable: multi-label table'}
+    results['duplicates'][name]={'exact_rows':len(keys)-len(set(keys)),'duplicate_film_keys':len(rows)-len({r['film'] for r in rows}) if name not in {'genres','themes_vox'} else 'not applicable: multi-label table'}
     results['joins'][name]={'orphan_titles':sorted({r['film'] for r in rows}-titles),'films_without_rows':sorted(titles-{r['film'] for r in rows})}
 numeric=[('pixar_films','run_time',1,'minutes'),('public_response','rotten_tomatoes_score',1,'0–100'),('public_response','metacritic_score',1,'0–100'),('public_response','imdb_score',1,'0–10'),('public_response','letterboxd_rating',1,'0–5'),('box_office','budget',1e6,'million USD'),('box_office','box_office_worldwide',1e6,'million USD')]
 for name,col,scale,unit in numeric:
@@ -45,7 +45,7 @@ results['truncated_plots']=[r['film'] for r in films if r['plot'].endswith('...'
 results['numeric_parse_errors']=[]; results['invalid_ranges']=[]
 for name,rows in TABLES.items():
     for col in rows[0]:
-        if col in {'film','film_rating','plot','release_date','category','value','cinema_score'}: continue
+        if col in {'film','film_rating','plot','release_date','category','value','cinema_score','theme','franchise'}: continue
         for r in rows:
             if missing(r[col]): continue
             try: v=float(r[col]); assert math.isfinite(v)
@@ -54,6 +54,9 @@ for name,rows in TABLES.items():
             if v<0 or (limit is not None and v>limit) or (col=='run_time' and v==0): results['invalid_ranges'].append([name,r['film'],col,v])
 results['whitespace_cells']=sum(v!=v.strip() for rows in TABLES.values() for r in rows for v in r.values())
 results['release_order_valid']=[int(r['number']) for r in films]==list(range(1,len(films)+1)) and [r['release_date'] for r in films]==sorted(r['release_date'] for r in films)
+from supplement import analyze as analyze_supplement
+supplement_results,supplement_report=analyze_supplement(TABLES,stats,md)
+results['supplement']=supplement_results
 (ROOT/'analysis/results.json').write_text(json.dumps(results,indent=2,ensure_ascii=False)+'\n')
 report='''# Growing Up with Magic: The Stories That Grow with Us
 
@@ -67,7 +70,7 @@ How can Pixar's films provide a timeline for exploring growing up, family, frien
 
 ### 1. Sources and acquisition
 
-The primary source is Eric Leung's [pixarfilms](https://github.com/erictleung/pixarfilms), a community-maintained R data package, not an official Pixar dataset. Four linked CSV tables were downloaded on **October 29, 2026 (America/New_York)** by cloning the repository. Snapshot commit: [`e85a10a77b043d45fe8d950dbdf4d27886ccf520`](https://github.com/erictleung/pixarfilms/tree/e85a10a77b043d45fe8d950dbdf4d27886ccf520). Raw files here preserve the upstream bytes. The manifest in `analysis/results.json` records SHA-256 hashes and file sizes.
+The primary source is Eric Leung's [pixarfilms](https://github.com/erictleung/pixarfilms), a community-maintained R data package, not an official Pixar dataset. Six linked CSV tables were downloaded on **October 29, 2026 (America/New_York)** by cloning the repository. Snapshot commit: [`e85a10a77b043d45fe8d950dbdf4d27886ccf520`](https://github.com/erictleung/pixarfilms/tree/e85a10a77b043d45fe8d950dbdf4d27886ccf520). Raw files here preserve the upstream bytes. The manifest in `analysis/results.json` records SHA-256 hashes and file sizes.
 
 '''
 descs={'pixar_films':('One film','Release order, release dates, runtime, MPA rating and brief plot. Wikipedia provides order/title/date; OMDb provides runtime/rating/plot.','2026-08-09'), 'public_response':('One film','Critic and audience reception from Rotten Tomatoes, Metacritic, CinemaScore, IMDb and Letterboxd, compiled in the package.','2026-08-09'), 'box_office':('One film','Budget and territorial/worldwide box-office gross in nominal USD, compiled from the package’s Wikipedia source.','2026-08-07'), 'genres':('One film–category–value assignment','Multiple genre and subgenre labels per film; upstream documentation identifies OMDb as source.','2026-08-07')}
@@ -78,7 +81,7 @@ for name,(grain,desc,updated) in descs.items():
 report+=md(['Table / local download','Rows','Columns','Bytes','Row represents','Last file commit date'],rows)
 report+='\nAll four tables were produced/compiled by Eric Leung and contributors. Individual table descriptions and immutable download links:\n\n'
 for name,(_,desc,_) in descs.items(): report+=f'- **{name}:** {desc} [Original CSV](https://raw.githubusercontent.com/erictleung/pixarfilms/e85a10a77b043d45fe8d950dbdf4d27886ccf520/data-raw/{name}.csv).\n'
-report+=f'''\nTotal download size is **{sum(d['bytes'] for d in results['dimensions'].values()):,} bytes** across four CSVs, readily manageable on a laptop. No credentials, API keys, or paid services are needed to analyze the saved snapshot.
+report+=f'''\nTotal download size is **{sum(d['bytes'] for d in results['dimensions'].values()):,} bytes** across six CSVs, readily manageable on a laptop. No credentials, API keys, or paid services are needed to analyze the saved snapshot.
 
 **Coverage:** {dates[0]} through {dates[-1]}, {len(films)} films. This is a Pixar film collection, not a global sample of animation or a sample of viewers. MPA ratings are US classifications. Box office separates US/Canada and other territories, with worldwide totals. Reception websites aggregate their own users/critics and do not supply viewer geography or demographics here. Release dates follow the upstream list and should not be interpreted as every country's premiere date.
 
@@ -144,5 +147,6 @@ Python 3.9+ standard library only; no installations or network required. This re
 
 **AI assistance disclosure:** Codex assisted with acquisition, code and report drafting. Statistical results were calculated by executing the included code on the downloaded files. Interpretation and any future theme coding should be reviewed by the student.
 '''
+report+=supplement_report
 (ROOT/'DATA_REPORT.md').write_text(report,encoding='utf-8')
 print(json.dumps({'dimensions':results['dimensions'],'missing':{n:{k:v for k,v in c.items() if v} for n,c in results['missing'].items()},'outliers':results['outliers'],'reconciliation':reconciliation},indent=2))
