@@ -46,4 +46,25 @@ Immutable downloads: [themes_vox.csv](https://raw.githubusercontent.com/erictleu
     text+='\nAdjacent-release gaps within recorded franchises (days):\n\n'+md(['n','Min','Max','Mean','Median','Range','Sample SD','25%','75%'],[[st[k] for k in ['n','min','max','mean','median','range','sd','q1','q3']]])
     text+='\nUnlisted films: '+', '.join(result['films_without_franchise_records'])+'.\n'
     text+='\n**Use in Growing Up with Magic:** combine themes with release dates for an annotated movie–theme matrix; use franchise timelines to show how characters return across life stages. A reader-entered birth year could produce their age at each release, explicitly labeled as calculated age at release rather than age at first viewing. Neither dataset establishes that themes changed audience emotions or measures the same person over time. Before a full 31-film theme visualization, develop a coding rubric and fill coverage gaps through documented manual review.\n'
+    text+='''
+### 9. IMDb official data: documented prospective source
+
+**Source / producer:** IMDb.com, Inc. **Accessed:** October 30, 2026. [IMDb Data](https://data.imdb.com/) describes licensed metadata products. The relevant public subset is documented separately under [IMDb Non-Commercial Datasets](https://data.imdb.com/non-commercial-datasets/), with files at [datasets.imdbws.com](https://datasets.imdbws.com/).
+
+**Acquisition status:** documentation reviewed; official IMDb bulk files have **not** been downloaded or analyzed for this report. No official-file row counts, file sizes, descriptive statistics or validation findings are claimed. Existing IMDb scores in sections 4–5 came from the pinned pixarfilms CSV, not a direct IMDb bulk download. The [user-supplied Pixar list](https://www.imdb.com/list/ls087911008/) is a separate browsing reference; its membership has not been independently validated or imported.
+
+| Candidate file | Documented columns | Intended project use |
+| --- | --- | --- |
+| title.basics.tsv.gz | 9: tconst, titleType, primaryTitle, originalTitle, isAdult, startYear, endYear, runtimeMinutes, genres | match film IDs and check titles, years, runtime and genre |
+| title.ratings.tsv.gz | 3: tconst, averageRating, numVotes | obtain an explicitly dated rating and vote-count snapshot |
+| title.crew.tsv.gz | 3: tconst, directors, writers | optional creator comparisons using person IDs |
+
+**Format and structure:** gzipped UTF-8 TSV with a header; the backslash-N marker (`\\N`) denotes missing values. `tconst` is a title identifier/string and a potential join key. Title text and titleType are strings; years and runtime are nullable integers; isAdult is a boolean flag, not an MPA age rating; genres is a multi-value field. averageRating is numeric and numVotes is an integer. Directors and writers are arrays of person identifiers. These files cover broad IMDb title records, not an already filtered Disney/Pixar film collection. Select the project films using a verified catalogue and match by ID, title and year rather than assuming a genre or company-name filter identifies the correct population.
+
+**Updates and limits:** IMDb states that the public files refresh daily. No particular snapshot timestamp has been acquired here. The documented public files do not include plot summaries, user-review text, viewer age groups, emotional themes or a Disney/Pixar studio-membership column. Those would require separately permitted sources or documented manual coding. Browsing an IMDb page is not equivalent to downloading a dataset.
+
+**Terms and attribution:** this is copyrighted data under limited personal/non-commercial terms, not CC0 or unrestricted open data. See [IMDb non-commercial use guidance](https://help.imdb.com/article/imdb/general-information/can-i-use-imdb-data-in-my-software/G5JTRESSHJBBHTGX) and [Conditions of Use](https://www.imdb.com/conditions/). The guidance restricts republishing/recreating a movie database and automated website extraction, and requires the statement: “Information courtesy of IMDb (https://www.imdb.com). Used with permission.” These restrictions must be checked before using a future extract in a public repository or website. No IMDb bulk extract or review corpus is redistributed in this repository.
+
+**Planned validation if acquired:** record download date, dimensions and checksums; test unique/nonmissing tconst keys, title/year matches, missing-value parsing, score ranges, nonnegative vote counts and unmatched project titles. Preserve a matching log and distinguish live IMDb ratings from the older pixarfilms snapshot. This is a future validation plan, not a claim that these checks have already been performed on IMDb bulk files.
+'''
     return result,text
