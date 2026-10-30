@@ -57,6 +57,9 @@ results['release_order_valid']=[int(r['number']) for r in films]==list(range(1,l
 from supplement import analyze as analyze_supplement
 supplement_results,supplement_report=analyze_supplement(TABLES,stats,md)
 results['supplement']=supplement_results
+from disney import analyze as analyze_disney
+disney_results,disney_report=analyze_disney(stats,md)
+results['disney']=disney_results
 (ROOT/'analysis/results.json').write_text(json.dumps(results,indent=2,ensure_ascii=False)+'\n')
 report='''# Growing Up with Magic: The Stories That Grow with Us
 
@@ -143,10 +146,12 @@ From this repository's root, run:
 python3 analysis/analyze.py
 ```
 
-Python 3.9+ standard library only; no installations or network required. This rebuilds this report and `analysis/results.json` from `data/raw/`. Source files, checksums, missing counts, outlier details, categorical frequencies and temporal summaries are included. `sources/` contains the upstream data dictionary and license. To obtain the identical source again, clone the upstream repository and check out the snapshot commit above, then compare the four CSV SHA-256 values in the results manifest.
+Python 3.9+ standard library only; no installations or network required. This rebuilds this report and `analysis/results.json` from `data/raw/` and `data/disney/`, with the source inventory from `SOURCE_GUIDE.md`. Source files, checksums, missing counts, outlier details, categorical frequencies and temporal summaries are included. `sources/` contains the upstream data dictionary and license. To obtain the identical source again, clone the upstream repository and check out the snapshot commit above, then compare the six Pixar CSV SHA-256 values in the results manifest.
 
 **AI assistance disclosure:** Codex assisted with acquisition, code and report drafting. Statistical results were calculated by executing the included code on the downloaded files. Interpretation and any future theme coding should be reviewed by the student.
 '''
-report+=supplement_report
+report=report.replace('Disney data is excluded to keep definitions and provenance consistent.', 'The October 30 Disney catalogue addition is documented separately in section 10; the computed Pixar statistics retain their original scope.')
+report+=supplement_report+disney_report
+report+='\n### 12. Updated source inventory and studio classification\n\n'+(ROOT/'SOURCE_GUIDE.md').read_text(encoding='utf-8').replace('# Source guide: Pixar and Disney Animation', '**Pixar and Disney Animation source guide**',1)
 (ROOT/'DATA_REPORT.md').write_text(report,encoding='utf-8')
 print(json.dumps({'dimensions':results['dimensions'],'missing':{n:{k:v for k,v in c.items() if v} for n,c in results['missing'].items()},'outliers':results['outliers'],'reconciliation':reconciliation},indent=2))
