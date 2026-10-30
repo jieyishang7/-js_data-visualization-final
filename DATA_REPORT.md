@@ -1,8 +1,8 @@
-# Growing Up with Magic: The Stories That Grow with Us
+# Growing Up with Magic
 
 ## Final Project Data Report
 
-Columbia Data Visualization · Jieyi Shang · October 29, 2026
+IMDb user reviews are planned for a later stage to explore viewers’ personal experiences and reflections on growing up.
 
 ### Project question and scope
 
