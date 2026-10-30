@@ -37,3 +37,15 @@ Python 3.9+ standard library only, no dependencies or network. Reads six saved P
 Pixar source: Eric Leung and contributors, [pixarfilms](https://github.com/erictleung/pixarfilms), commit `e85a10a77b043d45fe8d950dbdf4d27886ccf520`, accessed October 29, 2026. Disney catalogue accessed October 30. The Pixar package's CC0 licence does not apply to Disney assets or third-party references. No paper PDFs, review corpus, Disney images or raw IMDb bulk data are redistributed.
 
 Codex assisted with acquisition, code and drafting. Project statistics were computed from saved files; published research findings and unacquired sources are explicitly distinguished.
+
+### TMDB user reviews — planned source
+
+TMDB user reviews are planned for a later stage to explore growth, family, loss and explicitly described rewatch experiences in reviews of selected Pixar and Disney Animation films. No TMDB reviews have been downloaded or analyzed; sample size, film coverage and data dimensions remain unverified.
+
+- Source/producer: The Movie Database (TMDB), user-contributed reviews.
+- Documentation consulted: October 30, 2026.
+- [Official movie reviews API](https://developer.themoviedb.org/reference/movie-reviews): `GET /3/movie/{movie_id}/reviews`, supporting language and pagination.
+- [API application](https://www.themoviedb.org/settings/api): an account and API credentials are required.
+- [Official use conditions](https://developer.themoviedb.org/docs/faq): non-commercial API use is free with required attribution, approved logo and the notice “This product uses the TMDB API but is not endorsed or certified by TMDB.” Follow the API terms; access does not imply unrestricted redistribution of third-party review text. Keep credentials out of GitHub.
+
+Before analysis, check review counts per film, available fields, missing values, duplicate IDs, dates and language coverage. Theme labels will be project-created annotations. Viewer age cannot be inferred, and TMDB reviews must not be described as IMDb reviews. Publish project-generated summaries; verify applicable rights before publishing any raw review corpus.

@@ -444,3 +444,15 @@ For a cross-studio theme matrix, select a manageable film sample and create new 
 Viewer comments can supply attributed qualitative examples, summarized in the student's own words with original review links. A consistent sampling rule should include mixed responses rather than only favourite comments. Actual age and rewatch experience must be explicitly self-reported; do not infer them from usernames, film certificates or emotional wording. No review corpus has been collected. A birth-year timeline can show age at film release, but must not call that age at first viewing.
 
 Only acquired local files are covered by the computed statistics. References, planned API queries, and published study results remain separately labelled.
+
+### TMDB user reviews — planned source
+
+TMDB user reviews are planned for a later stage to explore growth, family, loss and explicitly described rewatch experiences in reviews of selected Pixar and Disney Animation films. No TMDB reviews have been downloaded or analyzed; sample size, film coverage and data dimensions remain unverified.
+
+- Source/producer: The Movie Database (TMDB), user-contributed reviews.
+- Documentation consulted: October 30, 2026.
+- [Official movie reviews API](https://developer.themoviedb.org/reference/movie-reviews): `GET /3/movie/{movie_id}/reviews`, supporting language and pagination.
+- [API application](https://www.themoviedb.org/settings/api): an account and API credentials are required.
+- [Official use conditions](https://developer.themoviedb.org/docs/faq): non-commercial API use is free with required attribution, approved logo and the notice “This product uses the TMDB API but is not endorsed or certified by TMDB.” Follow the API terms; access does not imply unrestricted redistribution of third-party review text. Keep credentials out of GitHub.
+
+Before analysis, check review counts per film, available fields, missing values, duplicate IDs, dates and language coverage. Theme labels will be project-created annotations. Viewer age cannot be inferred, and TMDB reviews must not be described as IMDb reviews. Publish project-generated summaries; verify applicable rights before publishing any raw review corpus.
