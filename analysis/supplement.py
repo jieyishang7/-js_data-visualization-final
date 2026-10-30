@@ -7,7 +7,7 @@ def analyze(tables, stats, md):
     aliases={"Bug's Life":"A Bug's Life",'Monsters, Inc':'Monsters, Inc.'}
     raw=tables['themes_vox']
     pairs=[(aliases.get(r['film'],r['film']),r['theme']) for r in raw]
-    unique=set(pairs)
+    unique=sorted(set(pairs))
     covered={f for f,t in unique}
     counts=Counter(t for f,t in unique)
     per_film=Counter(f for f,t in unique)
