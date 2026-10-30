@@ -10,7 +10,7 @@ How can Pixar's films provide a timeline for exploring growing up, family, frien
 
 ### 1. Sources and acquisition
 
-The primary source is Eric Leung's [pixarfilms](https://github.com/erictleung/pixarfilms), a community-maintained R data package, not an official Pixar dataset. Four linked CSV tables were downloaded on **October 29, 2026 (America/New_York)** by cloning the repository. Snapshot commit: [`e85a10a77b043d45fe8d950dbdf4d27886ccf520`](https://github.com/erictleung/pixarfilms/tree/e85a10a77b043d45fe8d950dbdf4d27886ccf520). Raw files here preserve the upstream bytes. The manifest in `analysis/results.json` records SHA-256 hashes and file sizes.
+The primary source is Eric Leung's [pixarfilms](https://github.com/erictleung/pixarfilms), a community-maintained R data package, not an official Pixar dataset. Six linked CSV tables were downloaded on **October 29, 2026 (America/New_York)** by cloning the repository. Snapshot commit: [`e85a10a77b043d45fe8d950dbdf4d27886ccf520`](https://github.com/erictleung/pixarfilms/tree/e85a10a77b043d45fe8d950dbdf4d27886ccf520). Raw files here preserve the upstream bytes. The manifest in `analysis/results.json` records SHA-256 hashes and file sizes.
 
 | Table / local download | Rows | Columns | Bytes | Row represents | Last file commit date |
 | --- | --- | --- | --- | --- | --- |
@@ -26,7 +26,7 @@ All four tables were produced/compiled by Eric Leung and contributors. Individua
 - **box_office:** Budget and territorial/worldwide box-office gross in nominal USD, compiled from the package’s Wikipedia source. [Original CSV](https://raw.githubusercontent.com/erictleung/pixarfilms/e85a10a77b043d45fe8d950dbdf4d27886ccf520/data-raw/box_office.csv).
 - **genres:** Multiple genre and subgenre labels per film; upstream documentation identifies OMDb as source. [Original CSV](https://raw.githubusercontent.com/erictleung/pixarfilms/e85a10a77b043d45fe8d950dbdf4d27886ccf520/data-raw/genres.csv).
 
-Total download size is **17,600 bytes** across four CSVs, readily manageable on a laptop. No credentials, API keys, or paid services are needed to analyze the saved snapshot.
+Total download size is **23,668 bytes** across six CSVs, readily manageable on a laptop. No credentials, API keys, or paid services are needed to analyze the saved snapshot.
 
 **Coverage:** 1995-11-22 through 2026-06-19, 31 films. This is a Pixar film collection, not a global sample of animation or a sample of viewers. MPA ratings are US classifications. Box office separates US/Canada and other territories, with worldwide totals. Reception websites aggregate their own users/critics and do not supply viewer geography or demographics here. Release dates follow the upstream list and should not be interpreted as every country's premiere date.
 
@@ -191,7 +191,9 @@ The inclusive period spans 32 calendar years. Years with no recorded releases: 1
 | box_office | 0 | 0 | 0 | 0 |
 | genres | 0 | not applicable: multi-label table | 0 | 0 |
 | pixar_films | 0 | 0 | 0 | 0 |
+| pixar_franchises | 0 | 0 | 0 | 14 |
 | public_response | 0 | 0 | 0 | 0 |
+| themes_vox | 0 | not applicable: multi-label table | 2 | 15 |
 
 **Type, range, and temporal checks:** 0 numeric parsing errors; 0 negative/impossible numeric values under the documented scale checks; 0 cells with leading/trailing whitespace; 0 release dates after October 29, 2026. All release dates parsed as ISO dates. Sequential release numbers and chronological source order: True. These checks establish internal plausibility, not independent verification of every external fact.
 
@@ -218,3 +220,62 @@ python3 analysis/analyze.py
 Python 3.9+ standard library only; no installations or network required. This rebuilds this report and `analysis/results.json` from `data/raw/`. Source files, checksums, missing counts, outlier details, categorical frequencies and temporal summaries are included. `sources/` contains the upstream data dictionary and license. To obtain the identical source again, clone the upstream repository and check out the snapshot commit above, then compare the four CSV SHA-256 values in the results manifest.
 
 **AI assistance disclosure:** Codex assisted with acquisition, code and report drafting. Statistical results were calculated by executing the included code on the downloaded files. Interpretation and any future theme coding should be reviewed by the student.
+
+### 8. Added datasets: story themes and franchises
+
+Added to the report on October 30, 2026. Both files were already acquired within the upstream repository clone on October 29, 2026, at the same pinned commit as the four primary tables. Original bytes are preserved. Their most recent file commits are August 9, 2026; the next update is not scheduled. These tables describe film-level editorial categories, not viewer geography, age, or emotional responses.
+
+| Dataset | Producer / source | Size | Columns and analytical types | Row unit |
+| --- | --- | --- | --- | --- |
+| [themes_vox](data/raw/themes_vox.csv) | Eric Leung and contributors, adapting Vox's editorial theme chart | 124 rows × 2 columns | film: string; theme: categorical string | one recorded film–theme annotation |
+| [pixar_franchises](data/raw/pixar_franchises.csv) | Eric Leung and contributors, pixarfilms | 17 rows × 2 columns | film: string/key; franchise: categorical string | one film's franchise membership |
+
+Immutable downloads: [themes_vox.csv](https://raw.githubusercontent.com/erictleung/pixarfilms/e85a10a77b043d45fe8d950dbdf4d27886ccf520/data-raw/themes_vox.csv), [pixar_franchises.csv](https://raw.githubusercontent.com/erictleung/pixarfilms/e85a10a77b043d45fe8d950dbdf4d27886ccf520/data-raw/pixar_franchises.csv). Theme provenance: [Vox chart](https://www.vox.com/2015/11/23/9780818/pixar-chart-movies-toy-story-anniversary). The package states CC0; section 3's third-party-rights limitation particularly applies to Vox's wording and editorial selections. Cite Vox when displaying these annotations, distinguish them from this project's own coding, and review reuse terms before reproducing the original chart or its expressive wording. No chart image is included. Upstream dictionaries are archived in `sources/`.
+
+**Theme validation and cleaning:** raw theme titles contain `Bug's Life` and `Monsters, Inc`, which do not exactly match the master film table. The analysis applies two explicit aliases: `Bug's Life` → `A Bug's Life`, and `Monsters, Inc` → `Monsters, Inc.`. It leaves the raw CSV unchanged and deduplicates normalized film–theme pairs for counts. Repeated film names are expected in this multi-label table. A missing annotation is treated as unknown, not as an absent theme. This historical editorial chart includes Finding Dory, whose release followed the original 2015 article date; its annotations should be checked against the original chart and any later updates before interpreting them as retrospective coding.
+
+Raw unique title strings: **18**; after normalization: **17 films**, **124 unique pairs**, **12 theme labels**; duplicate pairs after normalization: **0**; unmatched normalized titles: **0**. Mapped release coverage: **1995-11-22–2016-06-17**.
+
+| Editorial theme | Films with recorded annotation | Percent of covered films |
+| --- | --- | --- |
+| A mismatched pair of partners | 14 | 82.35 |
+| Someone finds their calling | 14 | 82.35 |
+| An ad hoc community is formed by movie's end | 14 | 82.35 |
+| And a wacky ensemble of supporting players | 13 | 76.47 |
+| Go on a wacky journey | 13 | 76.47 |
+| We explore the hidden world of everyday objects | 12 | 70.59 |
+| A child comes of age | 11 | 64.71 |
+| A loved one is lost | 9 | 52.94 |
+| With serious philosophical differences | 8 | 47.06 |
+| There's a super sad piece of music | 7 | 41.18 |
+| Their parent figure realizes nothing lasts forever | 7 | 41.18 |
+| Cars can talk | 2 | 11.76 |
+
+Number of recorded themes per covered film (not a measure of narrative complexity):
+
+| n | Min | Max | Mean | Median | Range | Sample SD | 25% | 75% |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 17 | 5 | 11 | 7.29 | 6 | 6 | 2.17 | 6.00 | 9.00 |
+
+Films without any theme records: Cars 3, Coco, Elemental, Elio, Hoppers, Incredibles 2, Inside Out 2, Lightyear, Luca, Onward, Soul, Toy Story 4, Toy Story 5, Turning Red. These remain unannotated; no labels are inferred.
+
+**Franchise statistics and validation:** all 17 film keys match the master table. There are six recorded franchises. Franchise membership includes originals, sequels, prequels and a spin-off (Lightyear), so the table below measures intervals between franchise releases, not exclusively sequel waiting times. Films without membership records are described as unlisted rather than automatically classified as standalone.
+
+| Franchise | Recorded films | First release | Latest release | Span (days) |
+| --- | --- | --- | --- | --- |
+| Cars | 3 | 2006-06-09 | 2017-06-16 | 4025 |
+| Finding Nemo | 2 | 2003-05-30 | 2016-06-17 | 4767 |
+| Inside Out | 2 | 2015-06-19 | 2024-06-14 | 3283 |
+| Monsters, Inc. | 2 | 2001-11-02 | 2013-06-21 | 4249 |
+| The Incredibles | 2 | 2004-11-05 | 2018-06-15 | 4970 |
+| Toy Story | 6 | 1995-11-22 | 2026-06-19 | 11167 |
+
+Adjacent-release gaps within recorded franchises (days):
+
+| n | Min | Max | Mean | Median | Range | Sample SD | 25% | 75% |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 11 | 1092 | 4970 | 2951 | 3283 | 3878 | 1,407.59 | 1,652.00 | 4,054.00 |
+
+Unlisted films: A Bug's Life, Brave, Coco, Elemental, Elio, Hoppers, Luca, Onward, Ratatouille, Soul, The Good Dinosaur, Turning Red, Up, WALL-E.
+
+**Use in Growing Up with Magic:** combine themes with release dates for an annotated movie–theme matrix; use franchise timelines to show how characters return across life stages. A reader-entered birth year could produce their age at each release, explicitly labeled as calculated age at release rather than age at first viewing. Neither dataset establishes that themes changed audience emotions or measures the same person over time. Before a full 31-film theme visualization, develop a coding rubric and fill coverage gaps through documented manual review.
