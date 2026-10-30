@@ -2,7 +2,7 @@
 
 ## Final Project Data Report
 
-IMDb and Rotten Tomatoes user reviews are planned for a later stage to explore viewers’ personal experiences and reflections on growing up.
+IMDb user reviews are planned for a later stage to explore viewers’ personal experiences and reflections on growing up.
 
 ### Project question and scope
 
