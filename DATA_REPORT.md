@@ -239,16 +239,16 @@ Raw unique title strings: **18**; after normalization: **17 films**, **124 uniqu
 | Editorial theme | Films with recorded annotation | Percent of covered films |
 | --- | --- | --- |
 | An ad hoc community is formed by movie's end | 14 | 82.35 |
-| A mismatched pair of partners | 14 | 82.35 |
 | Someone finds their calling | 14 | 82.35 |
+| A mismatched pair of partners | 14 | 82.35 |
 | And a wacky ensemble of supporting players | 13 | 76.47 |
 | Go on a wacky journey | 13 | 76.47 |
 | We explore the hidden world of everyday objects | 12 | 70.59 |
 | A child comes of age | 11 | 64.71 |
 | A loved one is lost | 9 | 52.94 |
 | With serious philosophical differences | 8 | 47.06 |
-| There's a super sad piece of music | 7 | 41.18 |
 | Their parent figure realizes nothing lasts forever | 7 | 41.18 |
+| There's a super sad piece of music | 7 | 41.18 |
 | Cars can talk | 2 | 11.76 |
 
 Number of recorded themes per covered film (not a measure of narrative complexity):
